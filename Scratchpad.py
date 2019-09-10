@@ -1,7 +1,15 @@
-for iteration in range(5):
-    count = 0
-    while True:
-        for letter in "hello, world":
-            count += 1
-        print("Iteration " + str(iteration) + "; count is: " + str(count))
+x = 23
+epsilon = 0.01
+step = 0.1
+guess = 0.0
+
+while abs(guess**2-x) >= epsilon:
+    if guess <= x:
+        guess += step
+    else:
         break
+
+if abs(guess**2 - x) >= epsilon:
+    print('failed')
+else:
+    print('succeeded: ' + str(guess))
