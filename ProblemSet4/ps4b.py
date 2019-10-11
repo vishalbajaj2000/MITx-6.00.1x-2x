@@ -1,7 +1,6 @@
 from ps4a import *
 import time
 
-
 #
 #
 # Computer chooses a word
@@ -124,8 +123,49 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this when you code this function
+    i = 0
+    while True:
+        while True:
+            choise = input('Enter n to deal a new hand, r to replays the last hand, or e to end game: ')
+            if choise not in ['n','r','e']:
+                print('Invalid command.')
+                print()
+            elif i == 0 and choise == 'r':
+                print('You have not played a hand yet. Please play a new hand first!')
+                print()
+            else:
+                break
+        if choise == 'e':
+            break
+
+        while True:
+            player = input('Enter u to have yourself play, c to have the computer play: ')
+            if player not in ['u','c']:
+                print('Invalid command.')
+                print()
+            else:
+                break
+        
+        if choise == 'n' and player == 'u':
+            i += 1
+            hand = dealHand(HAND_SIZE)
+            handCopy = hand.copy()
+            playHand(hand, wordList, HAND_SIZE)
+        elif choise == 'n' and player == 'c':
+            i += 1
+            hand = dealHand(HAND_SIZE)
+            handCopy = hand.copy()
+            compPlayHand(hand, wordList, HAND_SIZE)
+        elif choise == 'r':
+            if i > 0  and player == 'u':
+                hand = handCopy.copy()
+                playHand(hand, wordList, HAND_SIZE)
+            elif i > 0  and player == 'c':
+                hand = handCopy.copy()
+                compPlayHand(hand, wordList, HAND_SIZE)
+
+        else:
+            print('Invalid command.')
 
         
 #
