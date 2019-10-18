@@ -53,7 +53,7 @@ def get_story_string():
     f.close()
     return story
 
-WORDLIST_FILENAME = 'words.txt'
+WORDLIST_FILENAME = 'C:\\Dev\\MITx-6.00.1x\\ps6\\words.txt'
 
 class Message(object):
     ### DO NOT MODIFY THIS METHOD ###
@@ -160,7 +160,7 @@ class PlaintextMessage(Message):
         code is repeated
         '''
         self.message_text = Message(text)
-        self.valid_words = load_words('words.txt')
+        self.valid_words = load_words(WORDLIST_FILENAME)
         self.shift = shift
         self.encrypting_dict = self.build_shift_dict(self.shift)
         self.message_text_encrypted = self.message_text.apply_shift(self.shift)
@@ -217,7 +217,7 @@ class CiphertextMessage(Message):
             self.valid_words (list, determined using helper function load_words)
         '''
         self.message_text = Message(text)
-        self.valid_words = load_words('../words.txt')
+        self.valid_words = load_words(WORDLIST_FILENAME)
 
     def decrypt_message(self):
         '''
@@ -235,30 +235,32 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-
+        results = []
         for i in range(27):
-            self.best_shift = (0,self.message_text.apply_shift(26-i))
             self.decrypted_message = self.message_text.apply_shift(26-i)
             self.sentLen = len(self.decrypted_message.split(' '))
-            c = 0
+            #print(self.decrypted_message)
+            c = 1
+
             for j in self.decrypted_message.split(' '):
+                #print(j, c)
                 if is_word(self.valid_words, j) == True:
                     c += 1
-                    if c == sentLen:
-                        self.best_shift = (26-i,self.decrypted_message)
-                        return self.best_shift
                 else:
-                    break
-        return self.best_shift
+                    continue
+            results.append(c)
+        rm = results.index(max(results))
+
+        return (rm, self.message_text.apply_shift(rm))
 
 
 
 #Example test case (PlaintextMessage)
-plaintext = PlaintextMessage('hello', 2)
-print('Expected Output: jgnnq')
+plaintext = PlaintextMessage('jack shit in his pants fire balls hell night', 3)
+##print('Expected Output: jgnnq')
 print('Actual Output:', plaintext.get_message_text_encrypted())
     
 #Example test case (CiphertextMessage)
-ciphertext = CiphertextMessage('jgnnq')
-print('Expected Output:', (24, 'hello'))
+ciphertext = CiphertextMessage('sgdfg vklfdgw lfgq kdfglv sddfgdfqwv ildfguh edodfgov khodfgo qdfgojkw')
+#print('Expected Output:', (2, 'jack shit in his pants'))
 print('Actual Output:', ciphertext.decrypt_message())
