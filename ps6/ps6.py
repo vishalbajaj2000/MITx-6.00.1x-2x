@@ -53,7 +53,8 @@ def get_story_string():
     f.close()
     return story
 
-WORDLIST_FILENAME = 'C:\\Dev\\MITx-6.00.1x\\ps6\\words.txt'
+WORDLIST_FILENAME = 'C:\\Users\\vbajaj\\Local Files\\Dev\\MITx-6.00.1x\\ps6\\words.txt'
+#WORDLIST_FILENAME = 'C:\\Dev\\MITx-6.00.1x\\ps6\\words.txt'
 
 class Message(object):
     ### DO NOT MODIFY THIS METHOD ###
@@ -236,14 +237,12 @@ class CiphertextMessage(Message):
         and the decrypted message text using that shift value
         '''
         results = []
-        for i in range(27):
-            self.decrypted_message = self.message_text.apply_shift(26-i)
+        for i in range(26):
+            self.decrypted_message = self.message_text.apply_shift(i)
             self.sentLen = len(self.decrypted_message.split(' '))
-            #print(self.decrypted_message)
             c = 1
 
             for j in self.decrypted_message.split(' '):
-                #print(j, c)
                 if is_word(self.valid_words, j) == True:
                     c += 1
                 else:
@@ -256,11 +255,11 @@ class CiphertextMessage(Message):
 
 
 #Example test case (PlaintextMessage)
-plaintext = PlaintextMessage('jack shit in his pants fire balls hell night', 3)
+plaintext = PlaintextMessage('Nonsense words: breathe write popular solve truth bite severe dish fashioned arch coat destructive sell lighten bay', 16)
 ##print('Expected Output: jgnnq')
-print('Actual Output:', plaintext.get_message_text_encrypted())
+print('Actual Output:', plaintext.get_message_text_encrypted(), plaintext.get_shift())
     
 #Example test case (CiphertextMessage)
-ciphertext = CiphertextMessage('sgdfg vklfdgw lfgq kdfglv sddfgdfqwv ildfguh edodfgov khodfgo qdfgojkw')
+ciphertext = CiphertextMessage('rhuqjxu mhyju fefkbqh ieblu jhkjx ryju iuluhu tyix vqixyedut qhsx seqj tuijhksjylu iubb bywxjud rqo')
 #print('Expected Output:', (2, 'jack shit in his pants'))
 print('Actual Output:', ciphertext.decrypt_message())
