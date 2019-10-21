@@ -48,7 +48,7 @@ def get_story_string():
     """
     Returns: a joke in encrypted text.
     """
-    f = open("story.txt", "r")
+    f = open("C:\\Users\\vbajaj\\Local Files\\Dev\\MITx-6.00.1x\\ps6\\story.txt", "r")
     story = str(f.read())
     f.close()
     return story
@@ -263,3 +263,11 @@ print('Actual Output:', plaintext.get_message_text_encrypted(), plaintext.get_sh
 ciphertext = CiphertextMessage('rhuqjxu mhyju fefkbqh ieblu jhkjx ryju iuluhu tyix vqixyedut qhsx seqj tuijhksjylu iubb bywxjud rqo')
 #print('Expected Output:', (2, 'jack shit in his pants'))
 print('Actual Output:', ciphertext.decrypt_message())
+
+#Problem set 4
+def decrypt_story():
+    story = get_story_string()
+    ct = CiphertextMessage(story)
+    return ct.decrypt_message()
+
+decrypt_story()
