@@ -1,49 +1,44 @@
-class CiphertextMessage(Message):
-    def __init__(self, text):
-        '''
-        Initializes a CiphertextMessage object
-                
-        text (string): the message's text
+def is_list_permutation(L1, L2):
+    '''
+    L1 and L2: lists containing integers and strings
+    Returns False if L1 and L2 are not permutations of each other. 
+            If they are permutations of each other, returns a 
+            tuple of 3 items in this order: 
+            the element occurring most, how many times it occurs, and its type
+    '''
+    if L1 == [] and L2 == []:
+        return (None, None, None)
+    if len(L1) != len(L2):
+        return False
+    L1d = {}
+    L2d = {}
+    for i in L1:
+        if L1d.get(i) == None:
+            L1d[i] = 1
+        else:
+            L1d[i] += 1
+    for i in L2:
+        if L2d.get(i) == None:
+            L2d[i] = 1
+        else:
+            L2d[i] += 1
+    if L1d != L2d:
+        return False
+    else:
+        m = max(list(L1d.values()))
+        mostFreq = list(L1d.keys())[list(L1d.values()).index(m)]
+        return (mostFreq, m, type(mostFreq))
 
-        a CiphertextMessage object has two attributes:
-            self.message_text (string, determined by input text)
-            self.valid_words (list, determined using helper function load_words)
-        '''
-        self.message_text = Message(text)
-        self.valid_words = load_words(WORDLIST_FILENAME)
+    
 
-    def decrypt_message(self):
-        '''
-        Decrypt self.message_text by trying every possible shift value
-        and find the "best" one. We will define "best" as the shift that
-        creates the maximum number of real words when we use apply_shift(shift)
-        on the message text. If s is the original shift value used to encrypt
-        the message, then we would expect 26 - s to be the best shift value 
-        for decrypting it.
 
-        Note: if multiple shifts are  equally good such that they all create 
-        the maximum number of you may choose any of those shifts (and their
-        corresponding decrypted messages) to return
 
-        Returns: a tuple of the best shift value used to decrypt the message
-        and the decrypted message text using that shift value
-        '''
 
-        for i in range(27):
-            self.best_shift = (0,self.message_text.apply_shift(26-i))
-            self.decrypted_message = self.message_text.apply_shift(26-i)
-            self.sentLen = len(self.decrypted_message.split(' '))
-            #print(self.decrypted_message)
-            c = 0
-            for j in self.decrypted_message.split(' '):
-                c += 1
-                #print(j, c)
-                if is_word(self.valid_words, j) == True:
-                    if c == self.sentLen:
-                        self.best_shift = (i,self.decrypted_message)
-                        return self.best_shift
-                    else:
-                        pass
-                else:
-                    pass
-        return self.best_shift
+
+L1 = ['a', 'a', 'b']
+L2 = ['a', 'b']
+is_list_permutation(L1,L2) == False
+
+L1 = ['a', 'a', 'b']
+L2 = ['a', 'b', 'a']
+is_list_permutation(L1,L2) == ('a', 2, str)
