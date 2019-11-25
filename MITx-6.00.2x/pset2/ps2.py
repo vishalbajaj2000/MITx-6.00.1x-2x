@@ -278,20 +278,28 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    self.room = RectangularRoom(width, height)
-    self.rl = []
-    current_cov = 0
-
-    for i in range(num_robots):
-        rob+str(i) = robot_type(self.room, speed)
-        rl.append(rob+str(i))
+    trials = []
     for i in range(num_trials):
-        for rob in rl:
-            rob.updatePositionAndClean()
-            current_cov = self.room.getNumCleanedTiles()
-            if current_cov/self.room.getNumTiles <= current_cov:
-                
-        
+        current_cov = 0
+        room = RectangularRoom(width, height)
+        rl = []
+        for i in range(num_robots):
+            rl.append(robot_type(room, speed))
+        covered = False
+        itr = 0
+        while not covered:
+            itr += 1
+            for rob in rl:
+                rob.updatePositionAndClean()
+                current_cov = room.getNumCleanedTiles()
+            #anim.update(room, rl)
+            if current_cov/room.getNumTiles() >= min_coverage:
+                trials.append(itr)
+                covered = True
+            else:
+                pass
+    return float(sum(trials)//num_trials)
+
 
 # Uncomment this line to see how much your simulation takes on average
 ##print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
@@ -310,7 +318,16 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        x = True
+        while x:
+            self.setRobotDirection(random.randrange(0,360))
+            temp = self.getRobotPosition().getNewPosition(self.getRobotDirection(),self.speed)
+            if self.room.isPositionInRoom(temp) == True:
+                self.rpos = temp
+                self.room.cleanTileAtPosition(self.rpos)
+                x = False
+            else:
+                self.setRobotDirection(random.randrange(0,360))
 
 
 def showPlot1(title, x_label, y_label):
