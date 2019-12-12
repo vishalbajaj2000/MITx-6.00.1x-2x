@@ -59,8 +59,8 @@ def fitData(fileName):
                + str(round(k, 5)))
     pylab.legend(loc = 'best')
 
-##fitData('springData.txt')
-##pylab.show()
+fitData('springData.txt')
+pylab.show()
 
 def fitData1(fileName):
     xVals, yVals = getData(fileName)
@@ -121,8 +121,8 @@ def fitData3(fileName):
                + str(round(k, 5)))
     pylab.legend(loc = 'best')
 
-##fitData3('springData.txt')
-##pylab.show()
+fitData3('springData.txt')
+pylab.show()
 
 def getTrajectoryData(fileName):
     dataFile = open(fileName, 'r')
