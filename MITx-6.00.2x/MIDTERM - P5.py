@@ -1,4 +1,5 @@
-import pylab
+import pylab, math
+import matplotlib.pyplot as plt
 
 class Location(object):
     def __init__(self, x, y):
@@ -97,6 +98,22 @@ class DDrunk(Drunk):
                      (-0.56, 0.56), (0.56, -0.56)] 
         return random.choice(stepChoices)
 
-def plotit(drynktype, moves):
-    for i in range(moves+1):
+def plot_it(drunktype, sims,steps):
+    plt.gcf()
+    l = Location(0,0)
+    d = drunktype('drunktype')
+    f = Field()
+    f.addDrunk(d,l)
+    x,y = [], []
+    for i in range(sims+1):
+        a = walkVector(f,d,steps)
+        x.append(a[0])
+        y.append(a[1])
+    plt.scatter(x,y, 2)
+    plt.xlim(-100,100)
+    plt.ylim(-100,100)
+    plt.grid()
+    plt.show()
+
+
         
